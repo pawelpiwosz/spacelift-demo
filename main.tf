@@ -19,3 +19,7 @@ provider "aws" {
 resource "aws_s3_bucket" "mybucket" {
   bucket = "thisismytestbucketforspacelift"
 }
+
+resource "aws_s3_bucket" "mysecondbucket" {
+  bucket = "thisismysecondtestbucketforspacelift"
+}
