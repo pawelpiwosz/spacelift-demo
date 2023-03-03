@@ -37,7 +37,7 @@ resource "aws_security_group" "my-sg" {
     description = "test entry"
     from_port = 443
     to_port = 443
-    protocol = tcp
+    protocol = "tcp"
     cidr_blocks = ["10.10.10.10/32"]
   }
 
