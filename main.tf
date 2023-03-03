@@ -70,13 +70,9 @@ data "aws_subnet_ids" "list-of-subnets" {
   vpc_id = data.aws_vpc.default-vpc.id
 }
 
-# resource "aws_network_interface" "ec2-eni" {
-#   subnet_id   = aws_subnet.my_subnet.id
-
-#   tags = {
-#     Name = "primary_network_interface"
-#   }
-# }
+resource "aws_network_interface" "ec2-eni" {
+  subnet_id   = data.aws_subnet_ids.list-of-subnets[0]
+}
 
 # resource "aws_instance" "foo" {
 #   ami           = "ami-005e54dee72cc1d00" # us-west-2
