@@ -66,8 +66,8 @@ data "aws_ami" "ubuntu-recent" {
   owners = ["099720109477"] # Canonical
 }
 
-data "aws_subnet_ids" "private" {
-  vpc_id = var.vpc_id
+data "aws_subnet_ids" "list-of-subnets" {
+  vpc_id = data.aws_vpc.default-vpc.id
 }
 
 # resource "aws_network_interface" "ec2-eni" {
