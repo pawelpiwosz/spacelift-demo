@@ -29,23 +29,65 @@ data "aws_vpc" "default-vpc" {
 }
 
 resource "aws_security_group" "my-sg" {
-  name = "test-sg"
+  name        = "test-sg"
   description = "test drifts"
-  vpc_id = data.aws_vpc.default-vpc.id
+  vpc_id      = data.aws_vpc.default-vpc.id
 
   ingress {
     description = "test entry"
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["10.10.10.10/32"]
   }
 
   egress {
     description = "test entry"
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+data "aws_ami" "ubuntu-recent" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+data "aws_subnet_ids" "private" {
+  vpc_id = var.vpc_id
+}
+
+# resource "aws_network_interface" "ec2-eni" {
+#   subnet_id   = aws_subnet.my_subnet.id
+
+#   tags = {
+#     Name = "primary_network_interface"
+#   }
+# }
+
+# resource "aws_instance" "foo" {
+#   ami           = "ami-005e54dee72cc1d00" # us-west-2
+#   instance_type = "t2.micro"
+
+#   network_interface {
+#     network_interface_id = aws_network_interface.foo.id
+#     device_index         = 0
+#   }
+
+#   credit_specification {
+#     cpu_credits = "unlimited"
+#   }
+# }
