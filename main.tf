@@ -23,3 +23,29 @@ resource "aws_s3_bucket" "mybucket" {
 resource "aws_s3_bucket" "mysecondbucket" {
   bucket = "thisismysecondtestbucketforspacelift"
 }
+
+data "aws_vpc" "default-vpc" {
+  default = true
+}
+
+resource "aws_security_group" "my-sg" {
+  name = "test-sg"
+  description = "test drifts"
+  vpc_id = data.aws_vpc.default-vpc.id
+
+  ingress {
+    description = "test entry"
+    from_port = 443
+    to_port = 443
+    protocol = tcp
+    cidr_blocks = ["10.10.10.10/32"]
+  }
+
+  egress {
+    description = "test entry"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
