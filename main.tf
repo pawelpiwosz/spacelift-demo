@@ -79,12 +79,12 @@ resource "aws_network_interface" "ec2-eni" {
 }
 
 resource "aws_instance" "drift-test" {
-  ami           = "${data.aws_ami.ubuntu-recent.id}"
+  ami           = data.aws_ami.ubuntu-recent.id
   instance_type = "t2.micro"
+  security_groups = ["${aws_security_group.my-sg.id}"]
 
   network_interface {
     network_interface_id = aws_network_interface.ec2-eni.id
     device_index         = 0
   }
-
 }
