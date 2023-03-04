@@ -71,7 +71,7 @@ data "aws_subnet_ids" "list-of-subnets" {
 }
 
 resource "aws_network_interface" "ec2-eni" {
-  subnet_id = "${element(data.aws_subnet_ids.list-of-subnets.ids, 0)}"
+  subnet_id = "${data.aws_subnet_ids.list-of-subnets.ids[0]}"
 }
 
 # resource "aws_instance" "foo" {
