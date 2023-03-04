@@ -75,19 +75,16 @@ locals {
 }
 
 resource "aws_network_interface" "ec2-eni" {
-  subnet_id = "${local.subnet_ids_list[0]}"
+  subnet_id = local.subnet_ids_list[0]
 }
 
-# resource "aws_instance" "foo" {
-#   ami           = "ami-005e54dee72cc1d00" # us-west-2
-#   instance_type = "t2.micro"
+resource "aws_instance" "drift-test" {
+  ami           = data.aws_ami.ubuntu-recent
+  instance_type = "t2.micro"
 
-#   network_interface {
-#     network_interface_id = aws_network_interface.foo.id
-#     device_index         = 0
-#   }
+  network_interface {
+    network_interface_id = aws_network_interface.ec2-eni.id
+    device_index         = 0
+  }
 
-#   credit_specification {
-#     cpu_credits = "unlimited"
-#   }
-# }
+}
