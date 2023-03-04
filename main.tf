@@ -79,7 +79,7 @@ resource "aws_network_interface" "ec2-eni" {
 }
 
 resource "aws_instance" "drift-test" {
-  ami           = data.aws_ami.ubuntu-recent
+  ami           = "${data.aws_ami.ubuntu-recent}"
   instance_type = "t2.micro"
 
   network_interface {
