@@ -70,8 +70,12 @@ data "aws_subnet_ids" "list-of-subnets" {
   vpc_id = data.aws_vpc.default-vpc.id
 }
 
+locals {
+  subnet_ids_list = tolist(data.aws_subnet_ids.list-of-subnets.ids)
+}
+
 resource "aws_network_interface" "ec2-eni" {
-  subnet_id = "${data.aws_subnet_ids.list-of-subnets.ids[0]}"
+  subnet_id = "${local.subnet_ids_list[0]}"
 }
 
 # resource "aws_instance" "foo" {
