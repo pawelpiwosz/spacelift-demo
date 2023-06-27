@@ -10,7 +10,7 @@ provider "aws" {
     tags = {
       Environment = "Sandbox"
       Terraform   = "True"
-      Repo        = "spacelift-prep"
+      Repo        = "spacelift-preps"
       Project     = "Spacelift tutorial"
     }
   }
